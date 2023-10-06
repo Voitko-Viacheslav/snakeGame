@@ -17,6 +17,7 @@ body {
 
 .container {
     display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 600px;
@@ -40,8 +41,15 @@ body {
 }
 
 .game-field{
+	position: relative;
 	width: 400px;
     height: 400px;
 	background-color: #37474F;
 }
 
+/* .popup {
+	position: absolute;
+	width: 90%;
+	height: 90%;
+	background-color: gray;
+} */
