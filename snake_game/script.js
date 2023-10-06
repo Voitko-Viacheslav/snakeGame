@@ -1,3 +1,6 @@
+let scoreNumber = document.querySelector('.scoreNumber');
+const winField = document.querySelector('.popup-win');
+
 let gameCanvas = document.querySelector('.game-field');
 console.log(gameCanvas);
 // функция указывает формат рисовки
@@ -150,6 +153,7 @@ function drawGame() {
   // кушаю еду
   if (snakeX == food.x && snakeY == food.y) {
     score++;
+    scoreNumber.textContent = score;
     food = {
       x: getRandomNumberStep(min, max, step),
       y: getRandomNumberStep(min, max, step),
@@ -159,7 +163,13 @@ function drawGame() {
     snake.pop();
   }
 
-  // заканчиваю игру
+  // Выигрываю игру
+  if (scoreNumber.textContent == 5) {
+    clearInterval(startgame);
+    winField.style.opacity = '0.9';
+  }
+
+  // Проигрываю игру
   if (
     snakeX == cellsQuan * cellsQuan + 20 ||
     snakeX == -20 ||

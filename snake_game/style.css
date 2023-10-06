@@ -47,9 +47,20 @@ body {
 	background-color: #37474F;
 }
 
-/* .popup {
+.popup-win {
 	position: absolute;
 	width: 90%;
 	height: 90%;
 	background-color: gray;
-} */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: 0.5s;
+}
+
+.win {
+	color: goldenrod;
+	font-size: 4em;
+}
+
