@@ -5,7 +5,7 @@ const currentTime = document.querySelector('.current-time');
 const totalWinTime = document.querySelector('.win-time');
 const btnClose = document.querySelector('.close');
 const btnPause = document.querySelector('.btn-pause');
-// const btnStart = document.querySelector('.btn-start');
+const btnStart = document.querySelector('.btn-start');
 
 // todo Start Время в игре
 currentTime.textContent = '0:00';
@@ -52,15 +52,24 @@ btnClose.addEventListener('click', function () {
   seconds = 0;
   // timeGame = setInterval(showTime, 1000);
   // startgame = setInterval(drawGame, 300);
+  btnStart.disabled = false;
+  timeGame = setInterval(showTime, 1000);
 });
 
-// btnStart.addEventListener('click', function () {
-//   clearInterval(drawGame);
-//   startgame = setInterval(drawGame, 300);
-// });
+let count = 0;
+if (count == 0) {
+  btnPause.disabled = true;
+  btnStart.addEventListener('click', function () {
+    // clearInterval(drawGame);
+    startgame = setInterval(drawGame, 300);
+    btnStart.disabled = true;
+    count++;
+  });
+}
 
 // Пауза в игре
 btnPause.addEventListener('click', function () {
+  // winField.style.opacity = '0.9';
   win.textContent = 'Pause';
   btnClose.style.display = 'none';
   winField.classList.toggle('pause');
@@ -69,7 +78,15 @@ btnPause.addEventListener('click', function () {
   } else {
     startgame = setInterval(drawGame, 300);
   }
+  console.log(winField.classList.contains('pause'));
 });
+
+// Проиграл
+function loose() {
+  winField.style.opacity = '0.9';
+  btnClose.style.display = 'block';
+  win.textContent = 'You are loose';
+}
 
 let gameCanvas = document.querySelector('.game-field');
 console.log(gameCanvas);
@@ -200,10 +217,6 @@ function eatSnake(head, snakeBody) {
   }
 }
 
-// делаем координаты для переопределения
-let snakeX = snake[0].x;
-let snakeY = snake[0].y;
-
 // отрисовка игры
 function drawGame() {
   // делаю кнопку активной
@@ -214,6 +227,10 @@ function drawGame() {
   // рисую еду
   ctx.fillStyle = 'white';
   ctx.fillRect(food.x, food.y, cellsQuan, cellsQuan);
+
+  // делаем координаты для переопределения
+  let snakeX = snake[0].x;
+  let snakeY = snake[0].y;
 
   // рисую змею
   for (let i = 0; i < snake.length; i++) {
@@ -244,6 +261,7 @@ function drawGame() {
     win.textContent = 'You are Win';
     // делаю кнопку не активной
     btnPause.disabled = true;
+    btnStart.disabled = true;
   }
 
   // Проигрываю игру
@@ -253,7 +271,10 @@ function drawGame() {
     snakeY == cellsQuan * cellsQuan + 20 ||
     snakeY == -20
   ) {
+    loose();
+    clearInterval(timeGame);
     clearInterval(startgame);
+    btnPause.disabled = true;
   }
 
   // Двигаю змейку
@@ -284,5 +305,5 @@ function drawGame() {
   // console.log(snakeHead);
 }
 
-let startgame = setInterval(drawGame, 300);
+// let startgame = setInterval(drawGame, 300);
 // drawGame();
