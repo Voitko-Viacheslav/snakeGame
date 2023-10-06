@@ -13,10 +13,19 @@
     <div class="container">
         <h1>tetris</h1>
         <h2>Score: <span class="scoreNumber">0</span> </h2>
+        <div class="current-time"></div>
+        <button class="btn-pause">Pause</button>
+        <!-- <button class="btn-start">Start</button> -->
         <div class="canvas-wrapper">
             <canvas class="game-field" width="400" height="400"></canvas>
             <div class="popup-win">
+                <div class="close">
+                    <span class="close__line close__line-1"></span>
+                    <span class="close__line close__line-2"></span>
+                  </div>
                 <p class="win">You are Win</p>
+                <p class="total-time">Total Time: <span class="win-time"></span></p>
+                <p class="total_score"></p>
             </div>
         </div>
     </div>   

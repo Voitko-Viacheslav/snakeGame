@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	margin: 0;
 }
 
 html, body {
@@ -53,6 +54,8 @@ body {
 	height: 90%;
 	background-color: gray;
 	display: flex;
+	flex-direction: column;
+	gap: 20px;
 	align-items: center;
 	justify-content: center;
 	opacity: 0;
@@ -64,3 +67,44 @@ body {
 	font-size: 4em;
 }
 
+.total-time {
+	color: #fff;
+	font-size: 2.5em;
+}
+
+.close {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	width: 45px;
+	height: 20px;
+	z-index: 2;
+}
+
+.close__line {
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 2px;
+	background: #FFFFFF;
+}
+
+.close__line-1 {
+	top: 0%;
+	margin-top: 0;
+	transform: rotate(-45deg) translate(-13px, -51%);
+	margin-left: 12px;
+}
+
+.close__line-2 {
+	top: 50%;
+	margin-top: 8px;
+	transform: rotate(45deg) translate(-13px, 51%);
+	margin-left: 12px;
+}
+
+.pause {
+	height: 40%;
+	opacity: 1;
+	transition: 0.5s;
+}

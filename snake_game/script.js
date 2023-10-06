@@ -1,5 +1,75 @@
 let scoreNumber = document.querySelector('.scoreNumber');
 const winField = document.querySelector('.popup-win');
+const win = document.querySelector('.win');
+const currentTime = document.querySelector('.current-time');
+const totalWinTime = document.querySelector('.win-time');
+const btnClose = document.querySelector('.close');
+const btnPause = document.querySelector('.btn-pause');
+// const btnStart = document.querySelector('.btn-start');
+
+// todo Start Время в игре
+currentTime.textContent = '0:00';
+
+let seconds = 0;
+// считает время
+function countTime(s) {
+  let min = Math.floor(s / 60);
+  let sec = Math.floor(s - min * 60);
+  if (sec < 10) {
+    sec = `0${sec}`;
+  }
+  return `${min}:${sec}`;
+}
+
+function addTime() {
+  currentTime.textContent = countTime(seconds);
+}
+addTime();
+
+function showTime() {
+  seconds++;
+  addTime();
+  totalWinTime.textContent = currentTime.textContent;
+}
+
+let timeGame = setInterval(showTime, 1000);
+//! End Время в игре
+
+// Закрываю попап
+btnClose.addEventListener('click', function () {
+  winField.style.opacity = '0';
+  currentTime.textContent = '0:00';
+  score = 0;
+  scoreNumber.textContent = score;
+
+  // 1 Удаляю что бы заново начать игру
+  snake.splice(0);
+  snake[0] = {
+    x: cellsQuan * 10,
+    y: cellsQuan * 10,
+  };
+  // 1 Удаляю что бы заново начать игру
+  seconds = 0;
+  // timeGame = setInterval(showTime, 1000);
+  // startgame = setInterval(drawGame, 300);
+});
+
+// btnStart.addEventListener('click', function () {
+//   clearInterval(drawGame);
+//   startgame = setInterval(drawGame, 300);
+// });
+
+// Пауза в игре
+btnPause.addEventListener('click', function () {
+  win.textContent = 'Pause';
+  btnClose.style.display = 'none';
+  winField.classList.toggle('pause');
+  if (winField.classList.contains('pause')) {
+    clearInterval(startgame);
+  } else {
+    startgame = setInterval(drawGame, 300);
+  }
+});
 
 let gameCanvas = document.querySelector('.game-field');
 console.log(gameCanvas);
@@ -104,17 +174,16 @@ snake[0] = {
 // drawSnake();
 
 // направление змейки
-let dir;
 document.addEventListener('keydown', snakeDirection);
-
+let dir;
 function snakeDirection(e) {
-  if (e.keyCode == 37 && dir != 'right') {
+  if (e.keyCode == 37 && dir !== 'right') {
     dir = 'left';
-  } else if (e.keyCode == 38 && dir != 'down') {
+  } else if (e.keyCode == 38 && dir !== 'down') {
     dir = 'up';
-  } else if (e.keyCode == 39 && dir != 'left') {
+  } else if (e.keyCode == 39 && dir !== 'left') {
     dir = 'right';
-  } else if (e.keyCode == 40 && dir != 'up') {
+  } else if (e.keyCode == 40 && dir !== 'up') {
     dir = 'down';
   }
   // console.log(dir);
@@ -131,8 +200,14 @@ function eatSnake(head, snakeBody) {
   }
 }
 
+// делаем координаты для переопределения
+let snakeX = snake[0].x;
+let snakeY = snake[0].y;
+
 // отрисовка игры
 function drawGame() {
+  // делаю кнопку активной
+  btnPause.disabled = false;
   ctx.clearRect(0, 0, 400, 400);
   // рисую игровое поле
   drawAllCells();
@@ -145,10 +220,6 @@ function drawGame() {
     ctx.fillStyle = 'yellow';
     ctx.fillRect(snake[i].x, snake[i].y, cellsQuan, cellsQuan);
   }
-
-  // делаем координаты для переопределения
-  let snakeX = snake[0].x;
-  let snakeY = snake[0].y;
 
   // кушаю еду
   if (snakeX == food.x && snakeY == food.y) {
@@ -164,9 +235,15 @@ function drawGame() {
   }
 
   // Выигрываю игру
-  if (scoreNumber.textContent == 5) {
+  if (scoreNumber.textContent == 3) {
     clearInterval(startgame);
+    clearInterval(timeGame);
     winField.style.opacity = '0.9';
+    // Отображаю кнопку
+    btnClose.style.display = 'block';
+    win.textContent = 'You are Win';
+    // делаю кнопку не активной
+    btnPause.disabled = true;
   }
 
   // Проигрываю игру
@@ -207,5 +284,5 @@ function drawGame() {
   // console.log(snakeHead);
 }
 
-let startgame = setInterval(drawGame, 100);
+let startgame = setInterval(drawGame, 300);
 // drawGame();
