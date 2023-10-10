@@ -1,8 +1,10 @@
-let scoreNumber = document.querySelector('.scoreNumber');
+let scoreNumber = document.querySelector('.score-number');
 const winField = document.querySelector('.popup-win');
 const win = document.querySelector('.win');
+const person = document.querySelector('.person');
 const currentTime = document.querySelector('.current-time');
 const totalWinTime = document.querySelector('.win-time');
+const totalWinScore = document.querySelector('.win-score');
 const btnClose = document.querySelector('.close');
 const btnPause = document.querySelector('.btn-pause');
 const btnStart = document.querySelector('.btn-start');
@@ -24,7 +26,6 @@ function countTime(s) {
 function addTime() {
   currentTime.textContent = countTime(seconds);
 }
-addTime();
 
 function showTime() {
   seconds++;
@@ -32,7 +33,7 @@ function showTime() {
   totalWinTime.textContent = currentTime.textContent;
 }
 
-let timeGame = setInterval(showTime, 1000);
+let timeGame;
 //! End Время в игре
 
 // Закрываю попап
@@ -54,15 +55,26 @@ btnClose.addEventListener('click', function () {
   // timeGame = setInterval(showTime, 1000);
   // startgame = setInterval(drawGame, 300);
   btnStart.disabled = false;
-  timeGame = setInterval(showTime, 1000);
+  // timeGame = setInterval(showTime, 1000);
 });
 
+let name;
 let count = 0;
 if (count == 0) {
   btnPause.disabled = true;
+  // запускаю игру
   btnStart.addEventListener('click', function () {
     // clearInterval(drawGame);
-    startgame = setInterval(drawGame, 300);
+
+    name = prompt('What is your name?');
+    if (name.length === 0 || name === ' ' || name == null) {
+      person.textContent = 'user';
+    } else {
+      person.textContent = name;
+    }
+
+    timeGame = setInterval(showTime, 1000);
+    startgame = setInterval(drawGame, 200);
     btnStart.disabled = true;
     count++;
   });
@@ -71,6 +83,7 @@ if (count == 0) {
 // Пауза в игре
 btnPause.addEventListener('click', function () {
   // winField.style.opacity = '0.9';
+  btnPause.classList.toggle('active-pause');
   win.textContent = 'Pause';
   btnClose.style.display = 'none';
   winField.classList.toggle('pause');
@@ -254,7 +267,7 @@ function drawGame() {
   }
 
   // Выигрываю игру
-  if (scoreNumber.textContent == 3) {
+  if (scoreNumber.textContent == 30) {
     clearInterval(startgame);
     clearInterval(timeGame);
     // winField.style.opacity = '0.9';
@@ -266,6 +279,9 @@ function drawGame() {
     btnPause.disabled = true;
     btnStart.disabled = true;
   }
+
+  // В попапе скор
+  totalWinScore.textContent = score;
 
   // Проигрываю игру
   if (
@@ -301,7 +317,7 @@ function drawGame() {
   };
 
   // проверка когда ем сам себя
-  eatSnake(snakeHead, snake);
+  // eatSnake(snakeHead, snake);
 
   // переопределеную голову додаю к змеи
   snake.unshift(snakeHead);

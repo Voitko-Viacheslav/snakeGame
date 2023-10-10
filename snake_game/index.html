@@ -11,11 +11,16 @@
 <body>
 
     <div class="container">
-        <h1>tetris</h1>
-        <h2>Score: <span class="scoreNumber">0</span> </h2>
-        <div class="current-time"></div>
-        <button class="btn-pause">Pause</button>
-        <button class="btn-start">Start</button>
+        <h1>Snake</h1>
+        <div class="wrapper-score">
+           <h2 class="score-title">Score: <span class="score-number">0</span> </h2>
+           <div class="game-time"> Time: <span class="current-time"></span> </div> 
+        </div>
+        <div class="wrapper-btn">
+            <button class="btn-pause">Pause</button>
+            <button class="btn-start">Start</button>
+        </div>
+        
         <div class="canvas-wrapper">
             <canvas class="game-field" width="400" height="400"></canvas>
             <div class="popup-win">
@@ -23,12 +28,28 @@
                     <span class="close__line close__line-1"></span>
                     <span class="close__line close__line-2"></span>
                   </div>
+                <p class="person">user</p>
                 <p class="win">You are Win</p>
                 <p class="total-time">Total Time: <span class="win-time"></span></p>
-                <p class="total_score"></p>
+                <p class="total-score">Total Score: <span class="win-score">0</span></p>
             </div>
         </div>
+
     </div>   
+
+    <!-- <table id="resultsGamesTable">
+        <thead>
+          <tr>
+            <th>Place</th>
+            <th>Player</th>
+            <th>Score</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table> -->
 
     <script src="./script.js"></script>
 </body>

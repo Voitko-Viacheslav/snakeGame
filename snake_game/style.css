@@ -22,13 +22,59 @@ body {
 	justify-content: center;
 	align-items: center;
 	width: 600px;
-    height: 600px;
+    height: 800px;
 	/* border: 1px solid #FFA000; */
 	border-radius: 3px;
 	box-shadow:  10px 10px 50px 15px rgba(black, 0.3);
 	background-color: #455A64;
 	position: relative;
     background-color: rgb(100, 100, 68);
+}
+
+.wrapper-score {
+	display: flex;
+	padding: 10px;
+	justify-content: space-between;
+	width: 400px;
+	align-items: center;
+}
+
+.score-title, .game-time {
+	font-size: 2rem;
+}
+
+.current-time, .score-number {
+	color: #fff;
+	font-size: 2rem;
+}
+
+.wrapper-btn {
+	display: flex;
+	gap: 190px;
+	padding: 10px;
+}
+
+.btn-pause, .btn-start {
+	width: 100px;
+	height: 40px;
+	border: none;
+	border-radius: 15%;
+	cursor: pointer;
+	background-color: gray;
+	transition: 0.5s;
+	font-size: 1.5rem;
+}
+
+.btn-pause:hover, .btn-start:hover {
+	background-color: #455A64;
+}
+
+.btn-pause:active, .btn-start:active {
+	background-color: #455A64;
+}
+
+.active-pause {
+	background-color: #455A64;
 }
 
 .canvas-wrapper {
@@ -62,12 +108,12 @@ body {
 	transition: 0.5s;
 }
 
-.win {
+.person, .win {
 	color: goldenrod;
 	font-size: 4em;
 }
 
-.total-time {
+.total-time, .total-score {
 	color: #fff;
 	font-size: 2.5em;
 }
@@ -104,7 +150,7 @@ body {
 }
 
 .pause {
-	height: 40%;
+	height: 70%;
 	opacity: 1;
 	transition: 0.5s;
 }
