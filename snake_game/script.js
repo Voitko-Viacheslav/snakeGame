@@ -37,7 +37,8 @@ let timeGame = setInterval(showTime, 1000);
 
 // Закрываю попап
 btnClose.addEventListener('click', function () {
-  winField.style.opacity = '0';
+  // winField.style.opacity = '0';
+  winField.classList.remove('field-visible');
   currentTime.textContent = '0:00';
   score = 0;
   scoreNumber.textContent = score;
@@ -83,7 +84,8 @@ btnPause.addEventListener('click', function () {
 
 // Проиграл
 function loose() {
-  winField.style.opacity = '0.9';
+  winField.classList.add('field-visible');
+  // winField.style.opacity = '0.9';
   btnClose.style.display = 'block';
   win.textContent = 'You are loose';
 }
@@ -255,7 +257,8 @@ function drawGame() {
   if (scoreNumber.textContent == 3) {
     clearInterval(startgame);
     clearInterval(timeGame);
-    winField.style.opacity = '0.9';
+    // winField.style.opacity = '0.9';
+    winField.classList.add('field-visible');
     // Отображаю кнопку
     btnClose.style.display = 'block';
     win.textContent = 'You are Win';
