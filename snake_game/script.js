@@ -74,7 +74,7 @@ if (count == 0) {
     }
 
     timeGame = setInterval(showTime, 1000);
-    startgame = setInterval(drawGame, 200);
+    startgame = setInterval(drawGame, speedValue.textContent);
     btnStart.disabled = true;
     count++;
   });
@@ -232,6 +232,23 @@ function eatSnake(head, snakeBody) {
   }
 }
 
+// Уровень игры
+const levelInput = document.querySelector('.level');
+const levelValue = document.querySelector('.level-value');
+levelInput.addEventListener('input', updateLevelValue);
+function updateLevelValue() {
+  levelValue.textContent = levelInput.value;
+}
+
+// Скорость игры
+const spedInput = document.querySelector('.speed');
+const speedValue = document.querySelector('.speed-value');
+spedInput.addEventListener('input', updateSpeedValue);
+function updateSpeedValue() {
+  speedValue.textContent = spedInput.value;
+  console.log(speedValue.textContent);
+}
+
 // отрисовка игры
 function drawGame() {
   // делаю кнопку активной
@@ -266,8 +283,11 @@ function drawGame() {
     snake.pop();
   }
 
+  // В попапе скор
+  totalWinScore.textContent = score;
+
   // Выигрываю игру
-  if (scoreNumber.textContent == 30) {
+  if (scoreNumber.textContent == levelValue.textContent) {
     clearInterval(startgame);
     clearInterval(timeGame);
     // winField.style.opacity = '0.9';
@@ -278,10 +298,12 @@ function drawGame() {
     // делаю кнопку не активной
     btnPause.disabled = true;
     btnStart.disabled = true;
+    updateResult(
+      person.textContent,
+      totalWinScore.textContent,
+      totalWinTime.textContent
+    );
   }
-
-  // В попапе скор
-  totalWinScore.textContent = score;
 
   // Проигрываю игру
   if (
@@ -326,3 +348,58 @@ function drawGame() {
 
 // let startgame = setInterval(drawGame, 300);
 // drawGame();
+
+function addResult(placeGame, playerName, scoreGame, timeGame) {
+  const tableBody = document.querySelector('.table tbody');
+  const newRowTable = document.createElement('tr');
+  newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td><td>${timeGame}</td>`;
+  tableBody.appendChild(newRowTable);
+}
+
+function updateResult(playerName1, scoreGame1, timeGame1) {
+  const result = JSON.parse(localStorage.getItem('results')) || [];
+  // использую {} что бы дальше мог сортировать
+  result.push({ playerName1, scoreGame1, timeGame1 });
+  result.sort((a, b) => b.scoreGame1 - a.scoreGame1);
+  // что бы видно было только 10 игр
+  result.splice(3);
+  // переделываю в строку так как localStorage работает только со строками
+  localStorage.setItem('results', JSON.stringify(result));
+  const tableBody = document.querySelector('.table tbody');
+  // для очистки чтобы не допустить дублирования результатов
+  tableBody.innerHTML = '';
+  result.forEach((res, index) => {
+    addResult(index + 1, res.playerName1, res.scoreGame1, res.timeGame1);
+  });
+}
+
+// let a = [
+//   person.textContent,
+//   totalWinScore.textContent,
+//   totalWinTime.textContent,
+// ];
+// localStorage.setItem('result', JSON.stringify(a));
+
+// let result = localStorage.getItem('result');
+// console.log(JSON.parse(result));
+
+// function addResult(placeGame, playerName, scoreGame, timeGame) {
+//   const tableBody = document.querySelector('.table tbody');
+//   const newRowTable = document.createElement('tr');
+//   newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td><td>${timeGame}</td>`;
+//   tableBody.appendChild(newRowTable);
+// }
+
+// function updateResult(playerName, scoreGame, timeGame) {
+//   const result = JSON.parse(localStorage.getItem('results')) || [];
+//   result.push({ playerName, scoreGame, timeGame });
+//   result.sort((a, b) => b.score - a.score);
+//   result.splice(10);
+//   localStorage.setItem('results', JSON.stringify(result));
+//   const tableBody = document.querySelector('.table tbody');
+//   tableBody.innerHTML = '';
+//   result.forEach((result, index) => {
+//     addResult(index + 1, result.playerName, result.scoreGame, timeGame);
+//   });
+// }
+// addResult(placeGame, playerName, scoreGame, timeGame);

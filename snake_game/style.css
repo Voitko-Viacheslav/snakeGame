@@ -158,3 +158,65 @@ body {
 .field-visible {
 	opacity: 0.9;
 }
+
+.range-container, .speed-container {
+	display: flex;
+	gap: 5px;
+	position: relative;
+	width: 400px;
+	height: 70px;
+	padding-top: 10px;
+	align-items: center;
+  }
+  
+  .level, .speed {
+	width: 100%;
+  }
+  
+  .range-value, .range-speed {
+	position: absolute;
+	top: 5px; 
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 24px; 
+	color: #333; 
+  }
+
+  .container-table {
+	width: 600px;
+    height: 800px;
+	background-color: #333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* justify-content: center; */
+  }
+
+  /* .table {
+	opacity: 0;
+	transition: 0.5s;
+  } */
+
+  .table tr {
+	display: flex;
+	gap: 15px;
+	background-color: #455A64;
+  }
+
+  .table tr th {
+	background-color: #37474F;
+  }
+
+  .table tr th {
+	width: 100px;
+  }
+
+  .table tbody tr {
+	text-align: center;
+  }
+
+  .table tbody tr td {
+	width: 100px;
+	background-color: #315f75;
+  }
