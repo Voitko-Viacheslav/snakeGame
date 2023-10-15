@@ -10,11 +10,13 @@
 </head>
 <body>
 
-    <div class="container">
+  <div class="all">
+    <div class="wrapper">
+      <div class="container">
         <h1>Snake</h1>
         <div class="wrapper-score">
-           <h2 class="score-title">Score: <span class="score-number">0</span> </h2>
-           <div class="game-time"> Time: <span class="current-time"></span> </div> 
+          <h2 class="score-title">Score: <span class="score-number">0</span> </h2>
+          <div class="game-time"> Time: <span class="current-time"></span> </div> 
         </div>
         <div class="wrapper-btn">
             <button class="btn-pause">Pause</button>
@@ -50,8 +52,8 @@
             <div class="range-speed">Speed game <span  class="speed-value">150</span> </div>  
         </div>
 
-    </div>  
-    
+      </div>  
+  
     <div class="container-table">
         <h2>Table best results</h2>
         <table class="table">
@@ -70,11 +72,23 @@
       <audio class="eat-sound" src="./assets/eat.mp3" preload="auto"></audio>
 
     </div>
+  </div>
 
-    
-    
+  <footer class="footer">
+      <div class="footer__wrapper">
+          <div class="footer__course">
+            <a target="_blank" href="https://rs.school/js-stage0/">
+              <img class="pic" src="./assets/rs_school_js.svg" alt="">
+            </a>
+          </div>
+          <div class="footer__year">2023</div>
+          <div class="footer__name">
+            <a target="_blank" href="https://github.com/Voitko-Viacheslav">Viacheslav</a>
+          </div>
+        </div>
+  </footer>
+  </div>
 
-    
-    <script src="./script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
