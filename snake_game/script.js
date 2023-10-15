@@ -8,6 +8,7 @@ const totalWinScore = document.querySelector('.win-score');
 const btnClose = document.querySelector('.close');
 const btnPause = document.querySelector('.btn-pause');
 const btnStart = document.querySelector('.btn-start');
+const eatSound = document.querySelector('.eat-sound');
 
 // todo Start Время в игре
 currentTime.textContent = '0:00';
@@ -149,6 +150,18 @@ function drawAllCells() {
   }
 }
 
+// Когда змея съедает еду звук
+function snakeAteFoodSound() {
+  // Воспроиграйте звук
+  eatSound.play();
+
+  // Остановите звук через 1 секунду
+  setTimeout(() => {
+    eatSound.pause();
+    eatSound.currentTime = 0; // Сбросите позицию воспроизведения
+  }, 1000); // 1000 миллисекунд = 1 секунда
+}
+
 // Функция для отрисовки одной ячейки
 function drawCell(i, j) {
   // Метод strokeRect()рисует обведенный прямоугольник, начальная точка которого находится в точке (x, y),
@@ -278,6 +291,7 @@ function drawGame() {
       x: getRandomNumberStep(min, max, step),
       y: getRandomNumberStep(min, max, step),
     };
+    snakeAteFoodSound();
   } else {
     // удаляем последний елемент в масиве(что бы змейка отрисовывалась заново)
     snake.pop();
@@ -349,40 +363,31 @@ function drawGame() {
 // let startgame = setInterval(drawGame, 300);
 // drawGame();
 
-function addResult(placeGame, playerName, scoreGame, timeGame) {
+function addResult(placeGame, playerName, scoreGame) {
   const tableBody = document.querySelector('.table tbody');
   const newRowTable = document.createElement('tr');
-  newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td><td>${timeGame}</td>`;
+  newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td>`;
   tableBody.appendChild(newRowTable);
 }
 
-function updateResult(playerName1, scoreGame1, timeGame1) {
+function updateResult(playerName1, scoreGame1) {
   const result = JSON.parse(localStorage.getItem('results')) || [];
   // использую {} что бы дальше мог сортировать
-  result.push({ playerName1, scoreGame1, timeGame1 });
+  result.push({ playerName1, scoreGame1 });
   result.sort((a, b) => b.scoreGame1 - a.scoreGame1);
   // что бы видно было только 10 игр
-  result.splice(3);
+  result.splice(10);
   // переделываю в строку так как localStorage работает только со строками
   localStorage.setItem('results', JSON.stringify(result));
   const tableBody = document.querySelector('.table tbody');
   // для очистки чтобы не допустить дублирования результатов
   tableBody.innerHTML = '';
   result.forEach((res, index) => {
-    addResult(index + 1, res.playerName1, res.scoreGame1, res.timeGame1);
+    addResult(index + 1, res.playerName1, res.scoreGame1);
   });
 }
 
-// let a = [
-//   person.textContent,
-//   totalWinScore.textContent,
-//   totalWinTime.textContent,
-// ];
-// localStorage.setItem('result', JSON.stringify(a));
-
-// let result = localStorage.getItem('result');
-// console.log(JSON.parse(result));
-
+// потом сделаю что бы время считало
 // function addResult(placeGame, playerName, scoreGame, timeGame) {
 //   const tableBody = document.querySelector('.table tbody');
 //   const newRowTable = document.createElement('tr');
@@ -390,16 +395,19 @@ function updateResult(playerName1, scoreGame1, timeGame1) {
 //   tableBody.appendChild(newRowTable);
 // }
 
-// function updateResult(playerName, scoreGame, timeGame) {
+// function updateResult(playerName1, scoreGame1, timeGame1) {
 //   const result = JSON.parse(localStorage.getItem('results')) || [];
-//   result.push({ playerName, scoreGame, timeGame });
-//   result.sort((a, b) => b.score - a.score);
-//   result.splice(10);
+//   // использую {} что бы дальше мог сортировать
+//   result.push({ playerName1, scoreGame1, timeGame1 });
+//   result.sort((a, b) => b.scoreGame1 - a.scoreGame1);
+//   // что бы видно было только 10 игр
+//   result.splice(3);
+//   // переделываю в строку так как localStorage работает только со строками
 //   localStorage.setItem('results', JSON.stringify(result));
 //   const tableBody = document.querySelector('.table tbody');
+//   // для очистки чтобы не допустить дублирования результатов
 //   tableBody.innerHTML = '';
-//   result.forEach((result, index) => {
-//     addResult(index + 1, result.playerName, result.scoreGame, timeGame);
+//   result.forEach((res, index) => {
+//     addResult(index + 1, res.playerName1, res.scoreGame1, res.timeGame1);
 //   });
 // }
-// addResult(placeGame, playerName, scoreGame, timeGame);
