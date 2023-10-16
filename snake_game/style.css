@@ -82,6 +82,12 @@ html, body {
 	background-color: #455A64;
 }
 
+.btn-pause:disabled,
+.btn-start:disabled {
+  opacity: 0.5;
+  cursor: not-allowed; /* недоступен */
+} 
+
 .active-pause {
 	background-color: #455A64;
 }
@@ -102,6 +108,56 @@ html, body {
     height: 400px;
 	background-color: #37474F;
 }
+
+.enter-name {
+	position: absolute;
+	width: 70%;
+	height: 30%;
+	opacity: 1;
+	background-color: #315f75;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.5s;
+	border-radius: 15%;
+}
+
+.name-hide {
+	opacity: 0;
+}
+
+.inp-name {
+	width: 80%;
+	height: 20%;
+}
+
+ /* меняю стили инпут */
+input[type="text"] {
+	-webkit-appearance: none;  /* отменяю стандартные стили */
+	width: 80%;
+	height: 2em;
+	background: #cccccc81;
+	outline: none;
+	border: none;
+	border-radius: 15%;
+	padding-left: 10%;
+	transition: 0.5s;
+	font-size: 16px;
+}
+
+input[type="text"]:hover {
+	height: 2.5em;
+	width: 90%;
+	background-color: #ffffff9c;
+	font-size: 18px;
+	border-radius: 20%;
+}
+
+input::placeholder {
+	font-weight: 700; 
+	color: #000;
+}
+
 
 .popup-win {
 	position: absolute;
@@ -209,8 +265,15 @@ html, body {
 	width: 1em;
 	height: 1em;
 	background: rgb(94, 87, 87); 
+	/* background-color: #000; */
 	cursor: pointer;
 	border-radius: 50%;
+	transition: 0.5s;
+  }
+
+  input[type="range"]:disabled {
+	opacity: 0.5;
+	cursor: not-allowed; /* недоступен */
   }
  
   .container-table {

@@ -9,6 +9,10 @@ const btnClose = document.querySelector('.close');
 const btnPause = document.querySelector('.btn-pause');
 const btnStart = document.querySelector('.btn-start');
 const eatSound = document.querySelector('.eat-sound');
+const fieldName = document.querySelector('.enter-name');
+const playerName = document.querySelector('.inp-name');
+const levelGame = document.querySelector('.level');
+const speedGame = document.querySelector('.speed');
 
 // todo Start Время в игре
 currentTime.textContent = '0:00';
@@ -44,7 +48,8 @@ btnClose.addEventListener('click', function () {
   currentTime.textContent = '0:00';
   score = 0;
   scoreNumber.textContent = score;
-
+  // поле ввода имени показываю
+  fieldName.classList.remove('name-hide');
   // 1 Удаляю что бы заново начать игру
   snake.splice(0);
   snake[0] = {
@@ -59,24 +64,30 @@ btnClose.addEventListener('click', function () {
   // timeGame = setInterval(showTime, 1000);
 });
 
-let name;
+let nameP;
 let count = 0;
 if (count == 0) {
   btnPause.disabled = true;
   // запускаю игру
   btnStart.addEventListener('click', function () {
     // clearInterval(drawGame);
-
-    name = prompt('What is your name?');
-    if (name.length === 0 || name === ' ' || name == null) {
+    // показываю поле с именем
+    nameP = playerName.value;
+    fieldName.classList.add('name-hide');
+    // name = prompt('What is your name?');
+    if (nameP.length === 0 || nameP === ' ' || nameP == null) {
       person.textContent = 'user';
     } else {
-      person.textContent = name;
+      person.textContent = nameP;
     }
+    // очищаю инпут
+    playerName.value = '';
 
     timeGame = setInterval(showTime, 1000);
     startgame = setInterval(drawGame, speedValue.textContent);
     btnStart.disabled = true;
+    levelGame.disabled = true;
+    speedGame.disabled = true;
     count++;
   });
 }
@@ -102,6 +113,9 @@ function loose() {
   // winField.style.opacity = '0.9';
   btnClose.style.display = 'block';
   win.textContent = 'You are loose';
+  // делаю инпут активным
+  levelGame.disabled = false;
+  speedGame.disabled = false;
 }
 
 let gameCanvas = document.querySelector('.game-field');
@@ -312,6 +326,9 @@ function drawGame() {
     // делаю кнопку не активной
     btnPause.disabled = true;
     btnStart.disabled = true;
+    // делаю инпут активным
+    levelGame.disabled = false;
+    speedGame.disabled = false;
     updateResult(
       person.textContent,
       totalWinScore.textContent,
