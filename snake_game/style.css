@@ -192,6 +192,27 @@ html, body {
 	color: #333; 
   }
 
+  /* меняю стили инпут */
+  input[type="range"] {
+	-webkit-appearance: none;  /* отменяю стандартные стили */
+	width: 100%;
+	height: 1em;
+	background: #cccccc81;
+	outline: none;
+	border: none;
+	border-radius: 15px;
+  }
+  
+  /* меняю стили ползунка */
+  input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;  /* отменяю стандартные стили */
+	width: 1em;
+	height: 1em;
+	background: rgb(94, 87, 87); 
+	cursor: pointer;
+	border-radius: 50%;
+  }
+ 
   .container-table {
 	width: 600px;
     height: 800px;
