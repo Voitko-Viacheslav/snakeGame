@@ -484,16 +484,17 @@ function drawGame() {
 //   });
 // }
 
+// todo пока не считает время ошибка на const timeArray = timeString.value.split(':');
 // что бы сравнивать время
-function timeToSeconds(timeString) {
-  // 1:45
-  const timeArray = timeString.value.split(':');
-  const minutes = timeArray[0];
-  const seconds = timeArray[1];
-  // const [minutes, seconds] = timeString.split(':');
-  const totalTime = parseInt(minutes) * 60 + parseInt(seconds);
-  return totalTime; // 105
-}
+// function timeToSeconds(timeString) {
+//   // 1:45
+//   const timeArray = timeString.value.split(':');
+//   const minutes = timeArray[0];
+//   const seconds = timeArray[1];
+//   // const [minutes, seconds] = timeString.split(':');
+//   const totalTime = parseInt(minutes) * 60 + parseInt(seconds);
+//   return totalTime; // 105
+// }
 
 // Local Storage
 function addResult(placeGame, playerName, scoreGame, timeGame) {
@@ -512,12 +513,16 @@ function updateResult(playerName1, scoreGame1, timeGame1) {
   // console.log(result);
 
   result.sort((a, b) => {
-    if (parseInt(b.scoreGame1) !== parseInt(a.scoreGame1)) {
-      return parseInt(b.scoreGame1) - parseInt(a.scoreGame1);
-    } else {
-      return timeToSeconds(a.timeGame1) - timeToSeconds(b.timeGame1);
-    }
+    return parseInt(b.scoreGame1) - parseInt(a.scoreGame1);
   });
+
+  // result.sort((a, b) => {
+  //   if (parseInt(b.scoreGame1) !== parseInt(a.scoreGame1)) {
+  //     return parseInt(b.scoreGame1) - parseInt(a.scoreGame1);
+  //   } else {
+  //     return timeToSeconds(a.timeGame1) - timeToSeconds(b.timeGame1);
+  //   }
+  // });
 
   // что бы видно было только 10 игр
   result.splice(10);
