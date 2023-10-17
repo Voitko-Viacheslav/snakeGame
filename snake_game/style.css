@@ -38,6 +38,7 @@ html, body {
 	background-color: #455A64;
 	position: relative;
     background-color: rgb(100, 100, 68);
+	position: relative;
 }
 
 .wrapper-score {
@@ -59,11 +60,13 @@ html, body {
 
 .wrapper-btn {
 	display: flex;
-	gap: 190px;
+	/* gap: 190px; */
+	justify-content: space-between;
 	padding: 10px;
+	width: 400px;
 }
 
-.btn-pause, .btn-start {
+.btn-pause, .btn-start, .btn-best{
 	width: 100px;
 	height: 40px;
 	border: none;
@@ -74,22 +77,27 @@ html, body {
 	font-size: 1.5rem;
 }
 
-.btn-pause:hover, .btn-start:hover {
+.btn-pause:hover, .btn-start:hover, .btn-best:hover {
 	background-color: #455A64;
 }
 
-.btn-pause:active, .btn-start:active {
+.btn-pause:active, .btn-start:active, .btn-best:active  {
 	background-color: #455A64;
 }
 
 .btn-pause:disabled,
-.btn-start:disabled {
+.btn-start:disabled,
+.btn-best:disabled {
   opacity: 0.5;
   cursor: not-allowed; /* недоступен */
 } 
 
 .active-pause {
 	background-color: #455A64;
+}
+
+.best {
+	font-size: 16px;
 }
 
 .canvas-wrapper {
@@ -192,6 +200,15 @@ input::placeholder {
 	z-index: 2;
 }
 
+.close-table {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	width: 45px;
+	height: 20px;
+	z-index: 2;
+}
+
 .close__line {
 	position: absolute;
 	display: block;
@@ -222,6 +239,10 @@ input::placeholder {
 
 .field-visible {
 	opacity: 0.9;
+}
+
+.lie-num {
+	opacity: 0;
 }
 
 .range-container, .speed-container {
@@ -277,6 +298,9 @@ input::placeholder {
   }
  
   .container-table {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 600px;
     height: 800px;
 	background-color: #333;
@@ -285,7 +309,15 @@ input::placeholder {
 	align-items: center;
 	/* justify-content: center; */
 	padding-top: 40px;
+	opacity: 0;
+	transition: 0.5s;
+	z-index: -1;
   }
+
+  .container-visibl {
+	opacity: 1;
+	z-index: 100;
+  }	
 
   /* .table {
 	opacity: 0;
@@ -343,4 +375,8 @@ input::placeholder {
 
 .pic {
     width: 100px;
+}
+
+.ind {
+	z-index: 10;
 }

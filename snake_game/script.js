@@ -9,10 +9,18 @@ const btnClose = document.querySelector('.close');
 const btnPause = document.querySelector('.btn-pause');
 const btnStart = document.querySelector('.btn-start');
 const eatSound = document.querySelector('.eat-sound');
+const gameOverSound = document.querySelector('.game__over-sound');
+const gameWinSound = document.querySelector('.game__win-sound');
 const fieldName = document.querySelector('.enter-name');
 const playerName = document.querySelector('.inp-name');
 const levelGame = document.querySelector('.level');
 const speedGame = document.querySelector('.speed');
+const tableBestResult = document.querySelector('.container-table');
+const btnCloseBestResultTable = document.querySelector('.close-table');
+const btnBest = document.querySelector('.btn-best');
+
+// const rangeMusic = document.querySelectorAll('input[type="range"]');
+// rangeMusic.forEach((a) => a.addEventListener('mouseenter', eatSound.play()));
 
 // todo Start Время в игре
 currentTime.textContent = '0:00';
@@ -64,10 +72,11 @@ btnClose.addEventListener('click', function () {
   // timeGame = setInterval(showTime, 1000);
 });
 
-let nameP;
 let count = 0;
+let nameP;
 if (count == 0) {
   btnPause.disabled = true;
+  btnBest.disabled = true;
   // запускаю игру
   btnStart.addEventListener('click', function () {
     // clearInterval(drawGame);
@@ -84,17 +93,50 @@ if (count == 0) {
     playerName.value = '';
 
     timeGame = setInterval(showTime, 1000);
-    startgame = setInterval(drawGame, speedValue.textContent);
+    startgame = setInterval(drawGame, lieNum.textContent);
     btnStart.disabled = true;
     levelGame.disabled = true;
     speedGame.disabled = true;
+    btnBest.disabled = false;
     count++;
+
+    console.log(count);
   });
 }
 
+// кнопка лучшего результата
+btnBest.addEventListener('click', function () {
+  tableBestResult.classList.add('container-visibl');
+  // bestGame();
+  clearInterval(startgame);
+});
+
+// Закрываю попап таблицы результатов
+btnCloseBestResultTable.addEventListener('click', function () {
+  tableBestResult.classList.remove('container-visibl');
+  console.log(count);
+  if (count > 0) {
+    startgame = setInterval(drawGame, 300);
+  }
+});
+
 // Пауза в игре
-btnPause.addEventListener('click', function () {
-  // winField.style.opacity = '0.9';
+// btnPause.addEventListener('click', function () {
+//   btnPause.classList.toggle('active-pause');
+//   win.textContent = 'Pause';
+//   btnClose.style.display = 'none';
+//   winField.classList.toggle('pause');
+//   if (winField.classList.contains('pause')) {
+//     clearInterval(startgame);
+//   } else {
+//     startgame = setInterval(drawGame, 300);
+//   }
+//   console.log(winField.classList.contains('pause'));
+// });
+
+btnPause.addEventListener('click', pauseGame);
+
+function pauseGame() {
   btnPause.classList.toggle('active-pause');
   win.textContent = 'Pause';
   btnClose.style.display = 'none';
@@ -105,7 +147,7 @@ btnPause.addEventListener('click', function () {
     startgame = setInterval(drawGame, 300);
   }
   console.log(winField.classList.contains('pause'));
-});
+}
 
 // Проиграл
 function loose() {
@@ -116,6 +158,8 @@ function loose() {
   // делаю инпут активным
   levelGame.disabled = false;
   speedGame.disabled = false;
+  // Что бы кнопка best не запускала заново игру
+  count = 0;
 }
 
 let gameCanvas = document.querySelector('.game-field');
@@ -268,12 +312,32 @@ function updateLevelValue() {
 }
 
 // Скорость игры
+// Тут создал левую переменную что бы вышло lieNum
 const spedInput = document.querySelector('.speed');
 const speedValue = document.querySelector('.speed-value');
+const lieNum = document.querySelector('.lie-num');
+lieNum.textContent = 150;
 spedInput.addEventListener('input', updateSpeedValue);
 function updateSpeedValue() {
+  if (spedInput.value == 100) {
+    lieNum.textContent = 200;
+  }
+  if (spedInput.value == 50) {
+    lieNum.textContent = 250;
+  }
+  if (spedInput.value == 150) {
+    lieNum.textContent = 150;
+  }
+  if (spedInput.value == 200) {
+    lieNum.textContent = 100;
+  }
+  if (spedInput.value == 250) {
+    lieNum.textContent = 50;
+  }
+  // console.log(lieNum);
   speedValue.textContent = spedInput.value;
-  console.log(speedValue.textContent);
+
+  console.log(lieNum.textContent);
 }
 
 // отрисовка игры
@@ -283,9 +347,6 @@ function drawGame() {
   ctx.clearRect(0, 0, 400, 400);
   // рисую игровое поле
   drawAllCells();
-  // рисую еду
-  ctx.fillStyle = 'white';
-  ctx.fillRect(food.x, food.y, cellsQuan, cellsQuan);
 
   // делаем координаты для переопределения
   let snakeX = snake[0].x;
@@ -293,9 +354,17 @@ function drawGame() {
 
   // рисую змею
   for (let i = 0; i < snake.length; i++) {
-    ctx.fillStyle = 'yellow';
+    if (i == 0) {
+      ctx.fillStyle = 'yellow';
+    } else {
+      ctx.fillStyle = 'green';
+    }
     ctx.fillRect(snake[i].x, snake[i].y, cellsQuan, cellsQuan);
   }
+
+  // рисую еду
+  ctx.fillStyle = 'white';
+  ctx.fillRect(food.x, food.y, cellsQuan, cellsQuan);
 
   // кушаю еду
   if (snakeX == food.x && snakeY == food.y) {
@@ -329,24 +398,31 @@ function drawGame() {
     // делаю инпут активным
     levelGame.disabled = false;
     speedGame.disabled = false;
+    // Local storage
     updateResult(
       person.textContent,
       totalWinScore.textContent,
       totalWinTime.textContent
     );
+    // Что бы кнопка best не запускала заново игру
+    count = 0;
+    // Воспроиграйте звук
+    gameWinSound.play();
   }
 
   // Проигрываю игру
   if (
-    snakeX == cellsQuan * cellsQuan + 20 ||
+    snakeX == cellsQuan * cellsQuan ||
     snakeX == -20 ||
-    snakeY == cellsQuan * cellsQuan + 20 ||
+    snakeY == cellsQuan * cellsQuan ||
     snakeY == -20
   ) {
     loose();
     clearInterval(timeGame);
     clearInterval(startgame);
     btnPause.disabled = true;
+    // Воспроиграйте звук
+    gameOverSound.play();
   }
 
   // Двигаю змейку
@@ -380,18 +456,69 @@ function drawGame() {
 // let startgame = setInterval(drawGame, 300);
 // drawGame();
 
-function addResult(placeGame, playerName, scoreGame) {
+//
+//
+//
+
+// function addResult(placeGame, playerName, scoreGame) {
+//   const tableBody = document.querySelector('.table tbody');
+//   const newRowTable = document.createElement('tr');
+//   newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td>`;
+//   tableBody.appendChild(newRowTable);
+// }
+
+// function updateResult(playerName1, scoreGame1) {
+//   const result = JSON.parse(localStorage.getItem('results')) || [];
+//   // использую {} что бы дальше мог сортировать
+//   result.push({ playerName1, scoreGame1 });
+//   result.sort((a, b) => b.scoreGame1 - a.scoreGame1);
+//   // что бы видно было только 10 игр
+//   result.splice(10);
+//   // переделываю в строку так как localStorage работает только со строками
+//   localStorage.setItem('results', JSON.stringify(result));
+//   const tableBody = document.querySelector('.table tbody');
+//   // для очистки чтобы не допустить дублирования результатов
+//   tableBody.innerHTML = '';
+//   result.forEach((res, index) => {
+//     addResult(index + 1, res.playerName1, res.scoreGame1);
+//   });
+// }
+
+// что бы сравнивать время
+function timeToSeconds(timeString) {
+  // 1:45
+  const timeArray = timeString.split(':');
+  const minutes = timeArray[0];
+  const seconds = timeArray[1];
+  // const [minutes, seconds] = timeString.split(':');
+  const totalTime = parseInt(minutes) * 60 + parseInt(seconds);
+  return totalTime; // 105
+}
+
+// Local Storage
+function addResult(placeGame, playerName, scoreGame, timeGame) {
   const tableBody = document.querySelector('.table tbody');
   const newRowTable = document.createElement('tr');
-  newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td>`;
+  newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td><td>${timeGame}</td>`;
   tableBody.appendChild(newRowTable);
 }
 
-function updateResult(playerName1, scoreGame1) {
+// Local Storage
+function updateResult(playerName1, scoreGame1, timeGame1) {
   const result = JSON.parse(localStorage.getItem('results')) || [];
   // использую {} что бы дальше мог сортировать
-  result.push({ playerName1, scoreGame1 });
-  result.sort((a, b) => b.scoreGame1 - a.scoreGame1);
+  result.push({ playerName1, scoreGame1, timeGame1 });
+
+  // console.log(result);
+
+  result.sort((a, b) => {
+    if (parseInt(b.scoreGame1) !== parseInt(a.scoreGame1)) {
+      return parseInt(b.scoreGame1) - parseInt(a.scoreGame1);
+    } else {
+      return timeToSeconds(a.timeGame1) - timeToSeconds(b.timeGame1);
+    }
+  });
+
   // что бы видно было только 10 игр
   result.splice(10);
   // переделываю в строку так как localStorage работает только со строками
@@ -400,31 +527,6 @@ function updateResult(playerName1, scoreGame1) {
   // для очистки чтобы не допустить дублирования результатов
   tableBody.innerHTML = '';
   result.forEach((res, index) => {
-    addResult(index + 1, res.playerName1, res.scoreGame1);
+    addResult(index + 1, res.playerName1, res.scoreGame1, res.timeGame1);
   });
 }
-
-// потом сделаю что бы время считало
-// function addResult(placeGame, playerName, scoreGame, timeGame) {
-//   const tableBody = document.querySelector('.table tbody');
-//   const newRowTable = document.createElement('tr');
-//   newRowTable.innerHTML = `<td>${placeGame}</td><td>${playerName}</td><td>${scoreGame}</td><td>${timeGame}</td>`;
-//   tableBody.appendChild(newRowTable);
-// }
-
-// function updateResult(playerName1, scoreGame1, timeGame1) {
-//   const result = JSON.parse(localStorage.getItem('results')) || [];
-//   // использую {} что бы дальше мог сортировать
-//   result.push({ playerName1, scoreGame1, timeGame1 });
-//   result.sort((a, b) => b.scoreGame1 - a.scoreGame1);
-//   // что бы видно было только 10 игр
-//   result.splice(3);
-//   // переделываю в строку так как localStorage работает только со строками
-//   localStorage.setItem('results', JSON.stringify(result));
-//   const tableBody = document.querySelector('.table tbody');
-//   // для очистки чтобы не допустить дублирования результатов
-//   tableBody.innerHTML = '';
-//   result.forEach((res, index) => {
-//     addResult(index + 1, res.playerName1, res.scoreGame1, res.timeGame1);
-//   });
-// }

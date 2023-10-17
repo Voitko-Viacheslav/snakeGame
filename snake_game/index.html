@@ -12,53 +12,58 @@
 
   <div class="all">
     <div class="wrapper">
-      <div class="container">
-        <h1>Snake</h1>
-        <div class="wrapper-score">
-          <p class="score-title">Score: <span class="score-number">0</span> </p>
-          <div class="game-time"> Time: <span class="current-time"></span> </div> 
-        </div>
-        <div class="wrapper-btn">
-            <button class="btn-pause">Pause</button>
-            <button class="btn-start">Start</button>
-        </div>
-        
-        <div class="canvas-wrapper">
-            <canvas class="game-field" width="400" height="400"></canvas>
-            <div class="popup-win">
-                <div class="close">
-                    <span class="close__line close__line-1"></span>
-                    <span class="close__line close__line-2"></span>
-                  </div>
-                <p class="person">user</p>
-                <p class="win">You are Win</p>
-                <p class="total-time">Total Time: <span class="win-time"></span></p>
-                <p class="total-score">Total Score: <span class="win-score">0</span></p>
-            </div>
-            <!--  -->
-            <div class="enter-name">
-              <input class="inp-name" type="text" placeholder="Enter your name">
-            </div>
-        </div>
+    <div class="container">
+      <h1>Snake</h1>
+      <div class="wrapper-score">
+        <p class="score-title">Score: <span class="score-number">0</span> </p>
+        <div class="game-time"> Time: <span class="current-time"></span> </div> 
+      </div>
+      <div class="wrapper-btn">
+          <button class="btn-pause">Pause</button>
+          <button class="btn-best">Best</button>
+          <button class="btn-start">Start</button>
+      </div>
+      
+      <div class="canvas-wrapper">
+          <canvas class="game-field" width="400" height="400"></canvas>
+          <div class="popup-win">
+              <div class="close">
+                <span class="close__line close__line-1"></span>
+                <span class="close__line close__line-2"></span>
+              </div>
+              <p class="person">user</p>
+              <p class="win">You are Win</p>
+              <p class="total-time">Total Time: <span class="win-time"></span></p>
+              <p class="total-score">Total Score: <span class="win-score">0</span></p>
+          </div>
+       
+          <div class="enter-name">
+            <input class="inp-name" type="text" placeholder="Enter your name">
+          </div>
+      </div>
 
-        <div class="range-container">
-            <span>10</span>
-            <input class="level" type="range" min="10" max="200" step="5" value="20">
-            <span>200</span>
-            <div class="range-value">Level game: <span  class="level-value">20</span> </div>  
-        </div>
+      <div class="range-container">
+          <span>10</span>
+          <input class="level" type="range" min="10" max="200" step="5" value="20">
+          <span>200</span>
+          <div class="range-value">Level game: <span  class="level-value">20</span> </div>  
+      </div>
 
-        
-        <div class="speed-container">
-            <span>50</span>
-            <input class="speed" type="range" min="50" max="250" step="50" value="150">
-            <span>250</span>
-            <div class="range-speed">Speed game: <span  class="speed-value">150</span> </div>  
-        </div>
+      
+      <div class="speed-container">
+          <span>50</span>
+          <input class="speed" type="range" min="50" max="250" step="50" value="150">
+          <span>250</span>
+          <div class="range-speed">Speed game: <span  class="speed-value">150</span> </div>  
+      </div>
 
-      </div>  
+      <span class="lie-num"></span>
   
-    <div class="container-table">
+      <div class="container-table">
+        <div class="close-table">
+          <span class="close__line close__line-1"></span>
+          <span class="close__line close__line-2"></span>
+        </div>
         <h2>Table best results</h2>
         <table class="table">
           <thead>
@@ -66,7 +71,7 @@
               <th>Place</th>
               <th>Player</th>
               <th>Score</th>
-              <!-- <th>Time</th> -->
+              <th>Time</th>
             </tr>
           </thead>
         <tbody>
@@ -74,8 +79,13 @@
         </tbody>
       </table>
       <audio class="eat-sound" src="./assets/eat.mp3" preload="auto"></audio>
+      <audio class="game__over-sound" src="./assets/game-over.mp3" preload="auto"></audio>
+      <audio class="game__win-sound" src="./assets/game win.mp3" preload="auto"></audio>
 
     </div>
+
+    </div>  
+
   </div>
 
   <footer class="footer">
