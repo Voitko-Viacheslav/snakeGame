@@ -354,10 +354,10 @@ function drawGame() {
 
   // рисую змею
   for (let i = 0; i < snake.length; i++) {
-    if (i == 0) {
-      ctx.fillStyle = 'yellow';
-    } else {
+    if (i !== 0) {
       ctx.fillStyle = 'green';
+    } else {
+      ctx.fillStyle = 'yellow';
     }
     ctx.fillRect(snake[i].x, snake[i].y, cellsQuan, cellsQuan);
   }
@@ -487,7 +487,7 @@ function drawGame() {
 // что бы сравнивать время
 function timeToSeconds(timeString) {
   // 1:45
-  const timeArray = timeString.split(':');
+  const timeArray = timeString.value.split(':');
   const minutes = timeArray[0];
   const seconds = timeArray[1];
   // const [minutes, seconds] = timeString.split(':');
